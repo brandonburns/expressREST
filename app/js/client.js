@@ -1,6 +1,7 @@
 'use strict';
 
-var greet = require('./greet');
-var $ = require('jquery');
+require('angular/angular');
 
-$('main').append('<p>' + greet() + '</p>');
+var notesApp = angular.module('notesApp', []);
+
+require('./notes/controllers/notes_controller')(notesApp);
