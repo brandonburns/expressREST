@@ -11,68 +11,68 @@ require('./notes/controllers/notes_controller')(notesApp);
 
 module.exports = function(app) {
   app.controller('notesController', ['$scope', '$http', function($scope, $http) {
-    $scope.notes = [];
+    $scope.unicorns = [];
     $scope.getAll = function() {
       $http({
         method: 'GET',
-        url: 'api/v1/unicorns',
+        url: '/api/v1/unicorns'
       })
       .success(function(data) {
-        $scope.notes = data;
+        $scope.unicorns = data;
       })
       .error(function(data) {
         console.log(data);
       });
     };
 
-    $scope.create = function(note) {
+    $scope.create = function(unicorns) {
       $http({
         method: 'POST',
         url: '/api/v1/unicorns',
-        data: note
+        data: unicorns
       })
       .success(function(data) {
-        $scope.notes.push(data);
+        $scope.unicorns.push(data);
       })
       .error(function(data) {
         console.log(data);
       });
     };
 
-    $scope.save = function(note) {
+    $scope.save = function(unicorn) {
       $http({
         method: 'PUT',
-        url: 'api/v1/unicorns/' + note._id,
-        data: note
+        url: '/api/v1/unicorns/' + unicorn._id,
+        data: unicorn
       })
       .success(function() {
-        note.editing = false;
+        unicorn.editing = false;
       })
       .error(function(data) {
         console.log(data);
       })
     };
 
-    $scope.remove = function(note) {
+    $scope.remove = function(unicorn) {
       $http({
         method: 'DELETE',
-        url: 'api/v1/unicorns/' + note._id
+        url: 'api/v1/unicorns/' + unicorn._id
       })
       .success(function() {
-        $scope.notes.splice($scope.notes.indexOf(note), 1);
+        $scope.unicorns.splice($scope.unicorns.indexOf(unicorn), 1);
       })
       .error(function(data) {
         console.log(data);
       });
     };
 
-    $scope.editToggle = function(note) {
-      if (note.editing) {
-        note.unicornName = note.oldUnicornName;
-        note.editing = false;
+    $scope.editToggle = function(unicorn) {
+      if (unicorn.editing) {
+        unicorn.unicornName = unicorn.oldUnicornName;
+        unicorn.editing = false;
       } else {
-        note.oldUnicornName = note.unicornName;
-        note.editing = true;
+        unicorn.oldUnicornName = unicorn.unicornName;
+        unicorn.editing = true;
       }
     }
   }]);
@@ -28678,7 +28678,7 @@ describe('notes controller', function() {
   it('should be able to create a controller', function() {
     var notesController = $ControllerConstructor('notesController', {$scope: $scope});
     expect(typeof notesController).toBe('object');
-    expect(Array.isArray($scope.notes)).toBe(true);
+    expect(Array.isArray($scope.unicorns)).toBe(true);
   });
 
   describe('REST requests', function() {
@@ -28687,18 +28687,51 @@ describe('notes controller', function() {
     }));
 
     afterEach(function() {
-      $httpBackend.verifyNoOutstandingExpectations();
+      $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
     });
 
     it('should have a getAll function', function() {
-      $httpBackend.expectGET('/api/v1/unicorns').respond(200, [{unicornName: 'test note'}]);
+      $httpBackend.expectGET('/api/v1/unicorns').respond(200, [{unicornName: 'jim'}]);
 
       var notesController = $ControllerConstructor('notesController', {$scope: $scope});
       $scope.getAll();
       $httpBackend.flush();
 
-      expect($scope.unicorns[0].unicornName).toBe('test note');
+      expect($scope.unicorns[0].unicornName).toBe('jim');
+    });
+
+    it('should be able to create new unicorn', function() {
+      $httpBackend.expectPOST('/api/v1/unicorns').respond(200, {_id: 1, unicornName: 'bob'});
+
+      var notesController = $ControllerConstructor('notesController', {$scope: $scope});
+      $scope.create({unicornName: 'bob'});
+      $httpBackend.flush();
+
+      expect($scope.unicorns[0]._id).toBe(1);
+    });
+
+    it('should be able to save unicorns', function() {
+      $httpBackend.expectPUT('/api/v1/unicorns/1').respond(200);
+
+      $ControllerConstructor('notesController', {$scope: $scope});
+      var unicorn = {unicornName: 'dude', _id: 1, editing: true};
+      $scope.save(unicorn);
+      $httpBackend.flush();
+
+      expect(unicorn.editing).toBe(false);
+    });
+
+    it('should be able to delete a unicorn', function() {
+      $httpBackend.expectDELETE('api/v1/unicorns/1').respond(200);
+
+      $ControllerConstructor('notesController', {$scope: $scope});
+      var unicorn = {unicornName: 'dude man', _id: 1, editing: true};
+      $scope.unicorns.push(unicorn);
+      $scope.remove(unicorn);
+      $httpBackend.flush();
+
+      expect($scope.unicorns.length).toBe(0);
     });
   });
 });

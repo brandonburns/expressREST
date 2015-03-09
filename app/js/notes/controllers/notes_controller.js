@@ -2,68 +2,68 @@
 
 module.exports = function(app) {
   app.controller('notesController', ['$scope', '$http', function($scope, $http) {
-    $scope.notes = [];
+    $scope.unicorns = [];
     $scope.getAll = function() {
       $http({
         method: 'GET',
-        url: 'api/v1/unicorns',
+        url: '/api/v1/unicorns'
       })
       .success(function(data) {
-        $scope.notes = data;
+        $scope.unicorns = data;
       })
       .error(function(data) {
         console.log(data);
       });
     };
 
-    $scope.create = function(note) {
+    $scope.create = function(unicorns) {
       $http({
         method: 'POST',
         url: '/api/v1/unicorns',
-        data: note
+        data: unicorns
       })
       .success(function(data) {
-        $scope.notes.push(data);
+        $scope.unicorns.push(data);
       })
       .error(function(data) {
         console.log(data);
       });
     };
 
-    $scope.save = function(note) {
+    $scope.save = function(unicorn) {
       $http({
         method: 'PUT',
-        url: 'api/v1/unicorns/' + note._id,
-        data: note
+        url: '/api/v1/unicorns/' + unicorn._id,
+        data: unicorn
       })
       .success(function() {
-        note.editing = false;
+        unicorn.editing = false;
       })
       .error(function(data) {
         console.log(data);
       })
     };
 
-    $scope.remove = function(note) {
+    $scope.remove = function(unicorn) {
       $http({
         method: 'DELETE',
-        url: 'api/v1/unicorns/' + note._id
+        url: 'api/v1/unicorns/' + unicorn._id
       })
       .success(function() {
-        $scope.notes.splice($scope.notes.indexOf(note), 1);
+        $scope.unicorns.splice($scope.unicorns.indexOf(unicorn), 1);
       })
       .error(function(data) {
         console.log(data);
       });
     };
 
-    $scope.editToggle = function(note) {
-      if (note.editing) {
-        note.unicornName = note.oldUnicornName;
-        note.editing = false;
+    $scope.editToggle = function(unicorn) {
+      if (unicorn.editing) {
+        unicorn.unicornName = unicorn.oldUnicornName;
+        unicorn.editing = false;
       } else {
-        note.oldUnicornName = note.unicornName;
-        note.editing = true;
+        unicorn.oldUnicornName = unicorn.unicornName;
+        unicorn.editing = true;
       }
     }
   }]);
