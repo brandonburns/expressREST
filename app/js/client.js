@@ -2,6 +2,6 @@
 
 require('angular/angular');
 
-var notesApp = angular.module('notesApp', []);
+var unicornsApp = angular.module('unicornsApp', []);
 
-require('./notes/controllers/notes_controller')(notesApp);
+require('./notes/controllers/unicorns_controller')(unicornsApp);

@@ -3,10 +3,10 @@
 
 require("./../../bower_components/angular/angular");
 
-var notesApp = angular.module('notesApp', []);
+var unicornsApp = angular.module('unicornsApp', []);
 
-require('./notes/controllers/notes_controller')(notesApp);
-},{"./../../bower_components/angular/angular":4,"./notes/controllers/notes_controller":3}],2:[function(require,module,exports){
+require('./notes/controllers/unicorns_controller')(unicornsApp);
+},{"./../../bower_components/angular/angular":4,"./notes/controllers/unicorns_controller":3}],2:[function(require,module,exports){
 'use strict';
 module.exports = function() {
   return 'hello universe';
@@ -16,7 +16,7 @@ module.exports = function() {
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesController', ['$scope', '$http', function($scope, $http) {
+  app.controller('unicornsController', ['$scope', '$http', function($scope, $http) {
     $scope.unicorns = [];
     $scope.getAll = function() {
       $http({

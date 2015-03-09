@@ -3,14 +3,14 @@
 
 require("./../../bower_components/angular/angular");
 
-var notesApp = angular.module('notesApp', []);
+var unicornsApp = angular.module('unicornsApp', []);
 
-require('./notes/controllers/notes_controller')(notesApp);
-},{"./../../bower_components/angular/angular":4,"./notes/controllers/notes_controller":2}],2:[function(require,module,exports){
+require('./notes/controllers/unicorns_controller')(unicornsApp);
+},{"./../../bower_components/angular/angular":4,"./notes/controllers/unicorns_controller":2}],2:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesController', ['$scope', '$http', function($scope, $http) {
+  app.controller('unicornsController', ['$scope', '$http', function($scope, $http) {
     $scope.unicorns = [];
     $scope.getAll = function() {
       $http({
@@ -25,11 +25,11 @@ module.exports = function(app) {
       });
     };
 
-    $scope.create = function(unicorns) {
+    $scope.create = function(unicorn) {
       $http({
         method: 'POST',
         url: '/api/v1/unicorns',
-        data: unicorns
+        data: unicorn
       })
       .success(function(data) {
         $scope.unicorns.push(data);
@@ -28663,12 +28663,12 @@ var minlengthDirective = function() {
 require('../../app/js/client');
 require("./../../bower_components/angular-mocks/angular-mocks.js");
 
-describe('notes controller', function() {
+describe('unicorns controller', function() {
   var $ControllerConstructor;
   var $httpBackend;
   var $scope;
 
-  beforeEach(angular.mock.module('notesApp'));
+  beforeEach(angular.mock.module('unicornsApp'));
 
   beforeEach(angular.mock.inject(function($rootScope, $controller) {
     $scope = $rootScope.$new();
@@ -28676,8 +28676,8 @@ describe('notes controller', function() {
   }));
 
   it('should be able to create a controller', function() {
-    var notesController = $ControllerConstructor('notesController', {$scope: $scope});
-    expect(typeof notesController).toBe('object');
+    var unicornsController = $ControllerConstructor('unicornsController', {$scope: $scope});
+    expect(typeof unicornsController).toBe('object');
     expect(Array.isArray($scope.unicorns)).toBe(true);
   });
 
@@ -28692,20 +28692,20 @@ describe('notes controller', function() {
     });
 
     it('should have a getAll function', function() {
-      $httpBackend.expectGET('/api/v1/unicorns').respond(200, [{unicornName: 'jim'}]);
+      $httpBackend.expectGET('/api/v1/unicorns').respond(200, [{unicornName: 'callum'}]);
 
-      var notesController = $ControllerConstructor('notesController', {$scope: $scope});
+      var unicornsController = $ControllerConstructor('unicornsController', {$scope: $scope});
       $scope.getAll();
       $httpBackend.flush();
 
-      expect($scope.unicorns[0].unicornName).toBe('jim');
+      expect($scope.unicorns[0].unicornName).toBe('callum');
     });
 
     it('should be able to create new unicorn', function() {
-      $httpBackend.expectPOST('/api/v1/unicorns').respond(200, {_id: 1, unicornName: 'bob'});
+      $httpBackend.expectPOST('/api/v1/unicorns').respond(200, {_id: 1, unicornName: 'jose'});
 
-      var notesController = $ControllerConstructor('notesController', {$scope: $scope});
-      $scope.create({unicornName: 'bob'});
+      var unicornsController = $ControllerConstructor('unicornsController', {$scope: $scope});
+      $scope.create({unicornName: 'jose'});
       $httpBackend.flush();
 
       expect($scope.unicorns[0]._id).toBe(1);
@@ -28714,7 +28714,7 @@ describe('notes controller', function() {
     it('should be able to save unicorns', function() {
       $httpBackend.expectPUT('/api/v1/unicorns/1').respond(200);
 
-      $ControllerConstructor('notesController', {$scope: $scope});
+      $ControllerConstructor('unicornsController', {$scope: $scope});
       var unicorn = {unicornName: 'dude', _id: 1, editing: true};
       $scope.save(unicorn);
       $httpBackend.flush();
@@ -28725,7 +28725,7 @@ describe('notes controller', function() {
     it('should be able to delete a unicorn', function() {
       $httpBackend.expectDELETE('api/v1/unicorns/1').respond(200);
 
-      $ControllerConstructor('notesController', {$scope: $scope});
+      $ControllerConstructor('unicornsController', {$scope: $scope});
       var unicorn = {unicornName: 'dude man', _id: 1, editing: true};
       $scope.unicorns.push(unicorn);
       $scope.remove(unicorn);
