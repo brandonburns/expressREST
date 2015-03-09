@@ -3,7 +3,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var unicornRoutes = require('./routePaths/routePath');
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/unicornsapp_development');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/unicornsapp_development');
 
 var app = express();
 app.use(express.static(__dirname + '/build'));
