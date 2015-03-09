@@ -16,11 +16,11 @@ module.exports = function(app) {
       });
     };
 
-    $scope.create = function(unicorns) {
+    $scope.create = function(unicorn) {
       $http({
         method: 'POST',
         url: '/api/v1/unicorns',
-        data: unicorns
+        data: unicorn
       })
       .success(function(data) {
         $scope.unicorns.push(data);

@@ -9,20 +9,20 @@
     <h1>Notes:</h1>
     <form>
       <label for="newNoteBody">New Note</label>
-      <input type="text" id="newNoteBody" data-ng-model="newNote.unicornName">
-      <button type="submit" data-ng-click="create(newNote)">Save New Notes</button>
+      <input type="text" id="newNoteBody" data-ng-model="newUnicorn.unicornName">
+      <button type="submit" data-ng-click="create(newUnicorn)">Save New Notes</button>
     </form>
-    <ul data-ng-repeat="note in notes">
+    <ul data-ng-repeat="unicorn in unicorns">
       <li>
-        {{note.unicornName}}
-        <form data-ng-if="note.editing">
-          <label for="note{{note.id}}"></label>
-          <input type="text" id="note{{note._id}}" data-ng-model="note.unicornName">
-          <button type="submit" data-ng-click="save(note)">Save Changes</button>
-          <button type="button" data-ng-click="editToggle(note)">Cancel</button>
+        {{unicorn.unicornName}}
+        <form data-ng-if="unicorn.editing">
+          <label for="unicorn{{unicorn.id}}"></label>
+          <input type="text" id="unicorn{{unicorn._id}}" data-ng-model="unicorn.unicornName">
+          <button type="submit" data-ng-click="save(unicorn)">Save Changes</button>
+          <button type="button" data-ng-click="editToggle(unicorn)">Cancel</button>
         </form>
-        <button data-ng-click="editToggle(note)" data-ng-if="!note.editing">Edit Note</button>
-        <button data-ng-click="remove(note)">Delete Note</button>
+        <button data-ng-click="editToggle(unicorn)" data-ng-if="!unicorn.editing">Edit Note</button>
+        <button data-ng-click="remove(unicorn)">Delete Note</button>
       </li>
     </ul> 
   </main>
