@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var unicornSchema = new mongoose.Schema({
-  unicornName: String,
+  unicornBody: String,
   author: {type: String, default: 'Brandon Burns'}
 });
 

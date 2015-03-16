@@ -15,10 +15,10 @@ module.exports = function(app) {
 
   app.post('/unicorns', function(req, res) {
     var newUnicorn = new Unicorn(req.body); 
-    newUnicorn.save(function(err, data) {
+    newUnicorn.save(function(err, unicorn) {
       if (err) return res.status(500).send({'msg': 'did not save note'});
 
-      res.json(data);
+      res.json(unicorn);
     });
   });
 

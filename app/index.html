@@ -1,31 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello From Html</title>
+  <meta charset="utf-8">
+  <title>Unicorn React</title>
 </head>
-<body data-ng-app="notesApp">
-  <main data-ng-controller="notesController" data-ng-init="getAll()">
-    <h1>Notes:</h1>
-    <form>
-      <label for="newNoteBody">New Note</label>
-      <input type="text" id="newNoteBody" data-ng-model="newUnicorn.unicornName">
-      <button type="submit" data-ng-click="create(newUnicorn)">Save New Notes</button>
-    </form>
-    <ul data-ng-repeat="unicorn in unicorns">
-      <li>
-        {{unicorn.unicornName}}
-        <form data-ng-if="unicorn.editing">
-          <label for="unicorn{{unicorn.id}}"></label>
-          <input type="text" id="unicorn{{unicorn._id}}" data-ng-model="unicorn.unicornName">
-          <button type="submit" data-ng-click="save(unicorn)">Save Changes</button>
-          <button type="button" data-ng-click="editToggle(unicorn)">Cancel</button>
-        </form>
-        <button data-ng-click="editToggle(unicorn)" data-ng-if="!unicorn.editing">Edit Note</button>
-        <button data-ng-click="remove(unicorn)">Delete Note</button>
-      </li>
-    </ul> 
-  </main>
+<body>
 
   <script src="bundle.js"></script>
 </body>
